@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚦 Traffic Management System - AI Powered</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h2>🚦 Traffic Management System</h2>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <span style="color: #aaa; font-size: 0.9rem;" id="time-display">Loading...</span>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h3>Main Menu</h3>
+            <ul>
+                <li><button class="nav-btn active" onclick="showSection('dashboard')">📊 Dashboard</button></li>
+                <li><button class="nav-btn" onclick="showSection('traffic')">🚗 Traffic Monitor</button></li>
+                <li><button class="nav-btn" onclick="showSection('controls')">🎛️ Controls</button></li>
+                <li><button class="nav-btn" onclick="showSection('analytics')">📈 Analytics</button></li>
+            </ul>
+
+            <div style="margin-top: auto;">
+                <div style="background: rgba(42, 157, 143, 0.1); padding: 15px; border-radius: 8px; border: 1px solid #2a9d8f;">
+                    <small style="color: #2a9d8f;">System Status</small>
+                    <div style="font-weight: bold; margin-top: 5px;" id="sys-status">ONLINE</div>
+                    <div style="font-size: 0.75rem; color: #888; margin-top: 5px;" id="sys-uptime">Uptime: 00:00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboard" class="section active">
+                <h2 style="margin-bottom: 20px;">System Overview</h2>
+                
+                <div class="cards">
+                    <div class="card">
+                        <h3>TOTAL VEHICLES</h3>
+                        <p id="total-vehicles">0</p>
+                        <small id="vehicle-trend" style="color: #888;">↑ Recent activity</small>
+                    </div>
+                    <div class="card" style="border-top-color: #e76f51;">
+                        <h3>ACTIVE LANE</h3>
+                        <p id="active-lane">-</p>
+                        <small style="color: #888;">Green signal active</small>
+                    </div>
+                    <div class="card" style="border-top-color: #e9c46a;">
+                        <h3>AVG PCU VALUE</h3>
+                        <p id="avg-pcu">0.0</p>
+                        <small style="color: #888;">Traffic Load</small>
+                    </div>
+                    <div class="card" style="border-top-color: #f4a261;">
+                        <h3>SYSTEM EFFICIENCY</h3>
+                        <p id="efficiency">94%</p>
+                        <small style="color: #888;">Wait time avg</small>
+                    </div>
+                </div>
+
+                <div class="table-section">
+                    <h3>Lane Status Details</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lane ID</th>
+                                <th>Signal</th>
+                                <th>PCU Value</th>
+                                <th>Vehicle Count</th>
+                                <th>Timer</th>
+                                <th>Mode</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stats-table">
+                            <tr><td colspan="6" style="text-align: center; color: #888;">Loading data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TRAFFIC MONITOR SECTION -->
+            <div id="traffic" class="section">
+                <h2 style="margin-bottom: 20px;">Live Camera Feeds 📹</h2>
+                
+                <div class="video-grid">
+                    <div class="cam-box" id="box-0">
+                        <div class="cam-header">
+                            <div>
+                                <span style="font-weight: bold; font-size: 1.1rem;">LANE 1</span>
+                                <span style="color: #aaa; font-size: 0.75rem; margin-left: 10px;" id="info-0">--</span>
+                            </div>
+                            <span class="status-badge badge-red" id="badge-0">STOP</span>
+                        </div>
+                        <img src="/video_feed_1" onerror="this.src='https://via.placeholder.com/400x300?text=No+Feed'" alt="Lane 1">
+                        <div class="cam-controls">
+                            <button id="svc-0" class="svc-btn" onclick="toggleService(1)">Service: OFF</button>
+                        </div>
+                    </div>
+
+                    <div class="cam-box" id="box-1">
+                        <div class="cam-header">
+                            <div>
+                                <span style="font-weight: bold; font-size: 1.1rem;">LANE 2</span>
+                                <span style="color: #aaa; font-size: 0.75rem; margin-left: 10px;" id="info-1">--</span>
+                            </div>
+                            <span class="status-badge badge-red" id="badge-1">STOP</span>
+                        </div>
+                        <img src="/video_feed_2" onerror="this.src='https://via.placeholder.com/400x300?text=No+Feed'" alt="Lane 2">
+                        <div class="cam-controls">
+                            <button id="svc-1" class="svc-btn" onclick="toggleService(2)">Service: OFF</button>
+                        </div>
+                    </div>
+
+                    <div class="cam-box" id="box-2">
+                        <div class="cam-header">
+                            <div>
+                                <span style="font-weight: bold; font-size: 1.1rem;">LANE 3</span>
+                                <span style="color: #aaa; font-size: 0.75rem; margin-left: 10px;" id="info-2">--</span>
+                            </div>
+                            <span class="status-badge badge-red" id="badge-2">STOP</span>
+                        </div>
+                        <img src="/video_feed_3" onerror="this.src='https://via.placeholder.com/400x300?text=No+Feed'" alt="Lane 3">
+                        <div class="cam-controls">
+                            <button id="svc-2" class="svc-btn" onclick="toggleService(3)">Service: OFF</button>
+                        </div>
+                    </div>
+
+                    <div class="cam-box" id="box-3">
+                        <div class="cam-header">
+                            <div>
+                                <span style="font-weight: bold; font-size: 1.1rem;">LANE 4</span>
+                                <span style="color: #aaa; font-size: 0.75rem; margin-left: 10px;" id="info-3">--</span>
+                            </div>
+                            <span class="status-badge badge-red" id="badge-3">STOP</span>
+                        </div>
+                        <img src="/video_feed_4" onerror="this.src='https://via.placeholder.com/400x300?text=No+Feed'" alt="Lane 4">
+                        <div class="cam-controls">
+                            <button id="svc-3" class="svc-btn" onclick="toggleService(4)">Service: OFF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTROLS SECTION -->
+            <div id="controls" class="section">
+                <h2 style="margin-bottom: 20px;">Manual Controls & Emergency</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div class="card" style="text-align: left; border-top: none;">
+                        <h3 style="color: white; font-size: 1.1rem; margin-bottom: 15px;">⚡ Service Lane Mode</h3>
+                        <p style="font-size: 0.9rem; color: #888; font-weight: normal; margin-bottom: 20px;">
+                            Enable to detect emergency vehicles (ambulances) in service lanes with priority.
+                        </p>
+                        <div style="display: grid; gap: 10px;">
+                            <button id="svc-btn-0" class="svc-btn" onclick="toggleService(1)">Lane 1: Normal</button>
+                            <button id="svc-btn-1" class="svc-btn" onclick="toggleService(2)">Lane 2: Normal</button>
+                            <button id="svc-btn-2" class="svc-btn" onclick="toggleService(3)">Lane 3: Normal</button>
+                            <button id="svc-btn-3" class="svc-btn" onclick="toggleService(4)">Lane 4: Normal</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="text-align: left; border-top: none; border: 1px solid #e76f51;">
+                        <h3 style="color: #e76f51; font-size: 1.1rem; margin-bottom: 15px;">🚨 Emergency Protocol</h3>
+                        <p style="font-size: 0.9rem; color: #888; font-weight: normal; margin-bottom: 20px;">
+                            Activates RED for all lanes immediately. Use for accidents or VVIP movements.
+                        </p>
+                        <button id="btn-acc" class="btn-emergency" onclick="toggleAcc()">🚨 TRIGGER EMERGENCY STOP</button>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(231, 111, 81, 0.1); border-radius: 6px;">
+                            <small style="color: #e76f51;">⚠️ Activating will halt ALL traffic. Use only in emergencies.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANALYTICS SECTION -->
+            <div id="analytics" class="section">
+                <h2 style="margin-bottom: 20px;">Traffic Analytics</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="card" style="border-top: none; text-align: left;">
+                        <h3 style="color: white; margin-bottom: 15px;">Vehicle Distribution</h3>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>🚗 Cars:</span>
+                            <span id="count-cars" style="color: #2a9d8f; font-weight: bold;">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>🏍️ Bikes:</span>
+                            <span id="count-bikes" style="color: #f4a261; font-weight: bold;">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>🚌 Buses:</span>
+                            <span id="count-buses" style="color: #e76f51; font-weight: bold;">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>🚚 Trucks:</span>
+                            <span id="count-trucks" style="color: #e9c46a; font-weight: bold;">0</span>
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-top: none; text-align: left;">
+                        <h3 style="color: white; margin-bottom: 15px;">Lane Performance</h3>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Best Lane:</span>
+                            <span id="best-lane" style="color: #2a9d8f; font-weight: bold;">Lane --</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Worst Lane:</span>
+                            <span id="worst-lane" style="color: #e76f51; font-weight: bold;">Lane --</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Avg Green Time:</span>
+                            <span id="avg-green" style="color: #f4a261; font-weight: bold;">--s</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>System Load:</span>
+                            <span id="sys-load" style="color: #e9c46a; font-weight: bold;">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "env": {
+    "ADMIN_USER": "@admin_user",
+    "ADMIN_PASS": "@admin_pass"
+  },
+  "functions": {
+    "api/*.py": {
+      "memory": 3008,
+      "timeout": 30
+    }
+  },
+  "builds": [
+    {
+      "src": "api/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ],
+  "ignore": [
+    "yolov8x.pt",
+    "yolov8s.pt",
+    "__pycache__",
+    ".git",
+    "*.pyc"
+  ]
+}
