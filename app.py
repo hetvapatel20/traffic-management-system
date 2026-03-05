@@ -208,6 +208,10 @@ if __name__ == "__main__":
     print(f"🚀 PERFORMANCE CONFIG: Skip={FRAME_SKIP}, Quality={JPEG_QUALITY}%")
     print(f"🌍 SERVER URL: https://127.0.0.1:5000")
     print("="*50 + "\n")
+
+    if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
     
     # DEBUG FALSE IS IMPORTANT FOR SPEED
     app.run(debug=True)
+    
