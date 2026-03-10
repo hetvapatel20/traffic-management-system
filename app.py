@@ -1,10 +1,14 @@
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from flask import Flask, render_template, Response, jsonify, request, session, redirect, url_for
 import cv2
 from ai_engine.detector import TrafficDetector
 from ai_engine.traffic_logic import TrafficController
 import database
-from functools import wraps 
-import os
+from functools import wraps
 from ultralytics import YOLO
 
 # --- 🛠️ SYSTEM OPTIMIZATION (Fix for Lag) ---
