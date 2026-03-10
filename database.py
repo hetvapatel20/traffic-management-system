@@ -24,7 +24,7 @@ def init_db():
 
     conn.commit()
     conn.close()
-    print("✅ Database & Table Ready")
+    print("Database & Table Ready")
 
 def log_data(counts, pcu, signal):
     conn = sqlite3.connect(DB_NAME)
@@ -48,6 +48,34 @@ def log_data(counts, pcu, signal):
 
     conn.commit()
     conn.close()
-    print("✅ Data Inserted")
+    print("Data Inserted")
+
+def show_data():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM traffic_logs")
+    rows = c.fetchall()
+
+    print("\nTraffic Logs\n")
+    print("ID | Time | Cars | Bikes | Buses | Trucks | PCU | Signal")
+    print("-"*65)
+
+    for row in rows:
+        print(row[0], "|", row[1], "|", row[2], "|", row[3], "|", row[4], "|", row[5], "|", row[6], "|", row[7])
+
+    conn.close()
+
 if __name__ == "__main__":
     init_db()
+
+    sample_counts = {
+        "cars": 20,
+        "bikes": 15,
+        "buses": 3,
+        "trucks": 2
+    }
+
+    log_data(sample_counts, 45.5, "GREEN")
+
+    show_data()

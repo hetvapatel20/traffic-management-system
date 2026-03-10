@@ -206,4 +206,6 @@ setInterval(updateClock, 1000);
 updateDashboard();
 updateClock();
 
+
 console.log('✅ Frontend loaded successfully!');
+

@@ -27,9 +27,9 @@ ADMIN_PASS = "admin123"
 # --- 📹 LOAD VIDEOS ---
 # Make sure ye files 'static' folder mein hon
 VIDEOS = [
-    "static/traffic1.mp4", 
+    "static/traffic1.mp4",
     "static/traffic2.mp4",
-    "static/traffic3.mp4", 
+    "static/traffic3.mp4",
     "static/traffic4.mp4"
 ]
 
@@ -209,9 +209,6 @@ if __name__ == "__main__":
     print(f"🌍 SERVER URL: https://127.0.0.1:5000")
     print("="*50 + "\n")
 
-    if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
-    
-    # DEBUG FALSE IS IMPORTANT FOR SPEED
-    app.run(debug=True)
-    
+if __name__ == "__main__":
+    database.init_db()
+    app.run(host="0.0.0.0", port=10000, debug=False)
