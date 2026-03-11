@@ -1,4 +1,5 @@
 import time
+from ai_engine.detector import TrafficDetector
 
 class TrafficController:
     def __init__(self):

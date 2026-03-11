@@ -7,10 +7,10 @@ import torch
 device = 0 if torch.cuda.is_available() else 'cpu'
 print(f"🚀 Running on: {torch.cuda.get_device_name(0) if device == 0 else 'CPU'}")
 
-# 🛠️ CHANGE 1: Use 'yolov8x.pt' (The Most Powerful Model)
+# 🛠️ CHANGE 1: Use 'yolov8s.pt' (The Most Powerful Model)
 # Pehli baar run karne par ye download hoga (~130MB)
-print("⏳ Loading The Beast (yolov8x)...")
-model = YOLO('yolov8x.pt') 
+print("⏳ Loading The Beast (yolov8s)...")
+model = YOLO('yolov8s.pt') 
 
 video_path = "static/traffic1.mp4" 
 cap = cv2.VideoCapture(video_path)
@@ -57,7 +57,7 @@ print("=" * 55)
 final_avg = total_conf / 10
 
 print(f"\n✅ FINAL REPORT (OPTIMIZED):")
-print(f"🎯 Model Used: YOLOv8 Extra Large (yolov8x)")
+print(f"🎯 Model Used: YOLOv8 Extra Large (yolov8s)")
 print(f"📺 Resolution: 1280p (HD Analysis)")
 print(f"🔥 Average Accuracy/Confidence: {final_avg:.2f}%")
 

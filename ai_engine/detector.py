@@ -1,6 +1,8 @@
 from ultralytics import YOLO
 import cv2
 import torch
+from ai_engine.detector import TrafficDetector
+from ai_engine.traffic_logic import TrafficController
 
 class TrafficDetector:
     def __init__(self):

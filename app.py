@@ -3,6 +3,8 @@ import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+from flask import Flask
+app = Flask(__name__)
 from flask import Flask, render_template, Response, jsonify, request, session, redirect, url_for
 import cv2
 from ai_engine.detector import TrafficDetector
@@ -198,21 +200,19 @@ def toggle_accident():
     current_state["accident_mode"] = not current_state["accident_mode"]
     return jsonify({"status": current_state["accident_mode"]})
 
+if not os.path.exists("cert.pem") or not os.path.exists("key.pem"):
+        print("⚠️ WARNING: Certificates not found!")
+        print("👉 Run 'python gen_cert.py' first.")
+        print("\n" + "="*50)
+        print("🔒 SECURE TRAFFIC AI SERVER STARTING...")
+        print(f"🚀 PERFORMANCE CONFIG: Skip={FRAME_SKIP}, Quality={JPEG_QUALITY}%")
+        print("="*50 + "\n")
+        app.run(host="0.0.0.0", port=10000, debug=False)
+
+# --- 🚀 MAIN ENTRY POINT ---
 # --- 🚀 MAIN ENTRY POINT ---
 if __name__ == "__main__":
     database.init_db()
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
     
-    # Check for SSL Certificates
-    if not os.path.exists("cert.pem") or not os.path.exists("key.pem"):
-        print("⚠️ WARNING: Certificates not found! HTTPS might fail.")
-        print("👉 Run 'python gen_cert.py' first.")
-
-    print("\n" + "="*50)
-    print("🔒 SECURE TRAFFIC AI SERVER STARTING...")
-    print(f"🚀 PERFORMANCE CONFIG: Skip={FRAME_SKIP}, Quality={JPEG_QUALITY}%")
-    print(f"🌍 SERVER URL: https://127.0.0.1:5000")
-    print("="*50 + "\n")
-
-if __name__ == "__main__":
-    database.init_db()
-    app.run(host="0.0.0.0", port=10000, debug=False)
